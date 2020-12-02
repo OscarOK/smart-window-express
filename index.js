@@ -26,7 +26,4 @@ io.on('connection', (socket) => {
         socket.emit('caregiver', data);
     });
 
-    socket.on('data', (data) => {
-        socket.broadcast.emit('data', data);
-    })
 });
