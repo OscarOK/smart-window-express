@@ -1,0 +1,48 @@
+<video id="video" autoplay="true" style="width: 680px; height: 320px;"></video>
+<div id="logger"></div>
+
+<script src="socket.io/socket.io.js"></script>
+<script type="text/javascript">
+
+    // frames per second
+    const frameRate = 30;
+
+    var video = document.getElementById('video');
+    var logger = document.getElementById('logger');
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    context.width = 120;
+    context.height = 120;
+
+    if (navigator.getUserMedia) {
+
+        function successCallback(stream) {
+            console.log('Broadcasting...');
+            video.srcObject = stream;
+        };
+
+        function errorCallback(error) {
+            console.log('Error broadcasting: ' + error.code);
+        };
+        
+        navigator.getUserMedia({ video: true }, successCallback, errorCallback);
+
+    } else {
+        log('Cannot access to the camera');
+    };
+
+    const socket = io('http://localhost:3000');
+
+    socket.on('connect', () => {
+        console.log('connected');
+    });
+
+    socket.on('disconnect', () => {
+        console.log('disconnected');
+    });
+
+    setInterval(() => {
+        context.drawImage(video, 0, 0, context.width, context.height);
+        socket.emit('data', canvas.toDataURL('image/webp'));
+    }, (1000 / frameRate));
+</script>
