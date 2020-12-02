@@ -16,17 +16,17 @@ const io = socketio(server, {
     }
 });
 
-io.on('connection', (socket) => {
+io.sockets.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
 
     socket.on('caregiver', (data) => {
-        socket.emit('elderly', data);
+        socket.broadcast.emit('elderly', data);
     });
 
     socket.on('elderly', (data) => {
-        socket.emit('caregiver', data);
+        socket.broadcast.emit('caregiver', data);
     });
 
 });
