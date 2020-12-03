@@ -7,6 +7,9 @@ MIT
 @angular/fire
 MIT
 
+@angular/forms
+MIT
+
 @angular/platform-browser
 MIT
 
@@ -396,6 +399,9 @@ firebase/app
 firebase/auth
 
 firebase/database
+
+font-awesome
+(OFL-1.1 AND MIT)
 
 has-cors
 MIT
